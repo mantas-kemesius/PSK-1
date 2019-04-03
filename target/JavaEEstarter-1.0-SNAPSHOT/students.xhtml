@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+>
+<h:head/>
+<h:body>
+    <ui:composition template="WEB-INF/layout.xhtml">
+        <ui:define name="page">
+            <h2>#{labeler.students} of #{studentsOfUniversity.university.name}</h2>
+            <ol>
+                <ui:repeat value="#{studentsOfUniversity.university.uniqueStudents}" var="student">
+                    <li>
+                        <h:link value="#{student.studentNo}" outcome="/subjects?studentId=#{student.id}"/> #{student.firstName} #{student.lastName}
+                        <h:link value="Edit" outcome="/student?studentId=#{student.id}"/>
+                    </li>
+                </ui:repeat>
+            </ol>
+            <br/>
+            <h:form>
+                <h:inputText a:placeholder="first name" value="#{studentsOfUniversity.newStudent.firstName}" required="true"/>
+                <h:inputText a:placeholder="last name" value="#{studentsOfUniversity.newStudent.lastName}" required="true"/>
+                <h:inputText a:placeholder="student number" value="#{studentsOfUniversity.newStudent.studentNo}" required="true"/>
+                <h:commandButton value="Add student to university" action="#{studentsOfUniversity.createNewStudent}">
+                    <f:param name="universityId" value="#{studentsOfUniversity.university.id}"/>
+                </h:commandButton>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
